@@ -44,14 +44,14 @@ const AdminPage = () => {
           <p className="text-sm font-medium">
             Rota de API somente para administradores
           </p>
-          <Button onClick={onApiRouteClick}>Clique para testar</Button>
+          <Button onClick={onApiRouteClick}>Testar</Button>
         </div>
 
         <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">
           <p className="text-sm font-medium">
             Ação do servidor somente para administradores
           </p>
-          <Button onClick={onServerActionClick}>Clique para testar</Button>
+          <Button onClick={onServerActionClick}>Testar</Button>
         </div>
       </CardContent>
     </Card>
