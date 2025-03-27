@@ -1,7 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -12,6 +11,7 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { LoginSchema } from "@/schemas";
+import Link from "next/link";
 import { Button } from "../ui/button";
 import {
   Form,
@@ -65,14 +65,14 @@ export const LoginForm = () => {
             setShowTwoFactor(true);
           }
         })
-        .catch(() => setError("Something went wrong"));
+        .catch(() => setError("Algo deu errado"));
     });
   };
 
   return (
     <CardWrapper
-      headerLabel="Welcome back"
-      backButtonLabel="Don't have an account?"
+      headerLabel="Bem vindo de volta"
+      backButtonLabel="Não tem uma conta?"
       backButtonHref="/auth/register"
       showSocial
     >
@@ -85,7 +85,7 @@ export const LoginForm = () => {
                 name="code"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Two Factor Code</FormLabel>
+                    <FormLabel>Código de dois fatores</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
@@ -110,7 +110,7 @@ export const LoginForm = () => {
                         <Input
                           {...field}
                           disabled={isPending}
-                          placeholder="john.doe@example.com"
+                          placeholder="m@example.com"
                           type="email"
                         />
                       </FormControl>
@@ -123,24 +123,28 @@ export const LoginForm = () => {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>Senha</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           disabled={isPending}
-                          placeholder="******"
+                          placeholder="* * * * * * * *"
                           type="password"
                         />
                       </FormControl>
-                      <Button
-                        size="sm"
-                        variant="link"
-                        asChild
-                        className="px-0 font-normal"
-                      >
-                        <Link href="/auth/reset">Forgot password?</Link>
-                      </Button>
+
                       <FormMessage />
+
+                      <Button
+                        variant="link"
+                        className="font-normal w-full items-end justify-end px-0"
+                        size="sm"
+                        asChild
+                      >
+                        <Link href="/auth/reset" className="text-sm">
+                          Esqueceu sua senha?
+                        </Link>
+                      </Button>
                     </FormItem>
                   )}
                 />
@@ -150,7 +154,7 @@ export const LoginForm = () => {
           <FormError message={error || urlError} />
           <FormSuccess message={success} />
           <Button disabled={isPending} type="submit" className="w-full">
-            {showTwoFactor ? "Confirm" : "Login"}
+            {showTwoFactor ? "Confirmar" : "Entrar"}
           </Button>
         </form>
       </Form>

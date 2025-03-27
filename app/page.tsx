@@ -22,12 +22,12 @@ export default function Home() {
           🔐 Auth
         </h1>
         <p className="text-foreground text-lg">
-          A simple authentication service
+          Um serviço de autenticação simples
         </p>
         <div>
           <LoginButton asChild>
             <Button variant="secondary" size="lg">
-              Sign in
+              Entrar
             </Button>
           </LoginButton>
         </div>
