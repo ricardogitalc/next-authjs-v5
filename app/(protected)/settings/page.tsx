@@ -125,7 +125,7 @@ const SettingsPage = () => {
                         <FormControl>
                           <Input
                             {...field}
-                            placeholder="* * * * * * * *"
+                            placeholder="•••••••••"
                             type="password"
                             disabled={isPending}
                           />
@@ -143,7 +143,7 @@ const SettingsPage = () => {
                         <FormControl>
                           <Input
                             {...field}
-                            placeholder="* * * * * * * *"
+                            placeholder="•••••••••"
                             type="password"
                             disabled={isPending}
                           />
