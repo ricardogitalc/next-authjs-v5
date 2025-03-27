@@ -13,7 +13,6 @@ import {
   generateTwoFactorToken,
   generateVerificationToken,
 } from "@/lib/tokens";
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { LoginSchema } from "@/schemas";
 
 export const login = async (
@@ -23,7 +22,7 @@ export const login = async (
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
+    return { error: "Campos inválidos." };
   }
 
   const { email, password, code } = validatedFields.data;
@@ -31,7 +30,7 @@ export const login = async (
   const existingUser = await getUserByEmail(email);
 
   if (!existingUser || !existingUser.email || !existingUser.password) {
-    return { error: "Email does not exist!" };
+    return { error: "O email não existe." };
   }
 
   if (!existingUser.emailVerified) {
@@ -44,7 +43,7 @@ export const login = async (
       verificationToken.token
     );
 
-    return { success: "Confirmation email sent!" };
+    return { success: "Email de confirmação enviado." };
   }
 
   if (existingUser.isTwoFactorEnabled && existingUser.email) {
@@ -52,17 +51,17 @@ export const login = async (
       const twoFactorToken = await getTwoFactorTokenByEmail(existingUser.email);
 
       if (!twoFactorToken) {
-        return { error: "Invalid code!" };
+        return { error: "Código inválido." };
       }
 
       if (twoFactorToken.token !== code) {
-        return { error: "Invalid code!" };
+        return { error: "Código inválido." };
       }
 
       const hasExpired = new Date(twoFactorToken.expires) < new Date();
 
       if (hasExpired) {
-        return { error: "Code expired!" };
+        return { error: "Código expirado." };
       }
 
       await db.twoFactorToken.delete({
@@ -96,13 +95,15 @@ export const login = async (
     await signIn("credentials", {
       email,
       password,
-      redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+      redirect: false,
     });
+
+    return { success: "Login realizado com sucesso!" };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "Invalid credentials!" };
+          return { error: "Dados inválidos." };
         default:
           return { error: "Algo deu errado!" };
       }

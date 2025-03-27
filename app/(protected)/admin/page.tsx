@@ -24,9 +24,9 @@ const AdminPage = () => {
   const onApiRouteClick = () => {
     fetch("/api/admin").then((response) => {
       if (response.ok) {
-        toast.success("Rota de API permitida!");
+        toast.success("Rota de API permitida");
       } else {
-        toast.error("Forbidden API Route!");
+        toast.error("Rota de API proibida");
       }
     });
   };
@@ -44,7 +44,7 @@ const AdminPage = () => {
           <p className="text-sm font-medium">
             Rota de API somente para administradores
           </p>
-          <Button onClick={onApiRouteClick}>Click to test</Button>
+          <Button onClick={onApiRouteClick}>Clique para testar</Button>
         </div>
 
         <div className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-md">

@@ -1,7 +1,8 @@
 "use client";
 
+import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation"; // Adicionar este import
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -25,10 +26,11 @@ import { Input } from "../ui/input";
 
 export const LoginForm = () => {
   const searchParams = useSearchParams();
+  const router = useRouter(); // Certifique-se de que esta linha está adicionada
   const callbackUrl = searchParams.get("callbackUrl");
   const urlError =
     searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Email already in use with different provider!"
+      ? "Email já em uso com outro provedor."
       : "";
 
   const [showTwoFactor, setShowTwoFactor] = useState(false);
@@ -59,6 +61,10 @@ export const LoginForm = () => {
           if (data?.success) {
             form.reset();
             setSuccess(data.success);
+            // Redirecionar após o sucesso
+            setTimeout(() => {
+              router.push(callbackUrl || DEFAULT_LOGIN_REDIRECT);
+            }, 1000); // Adiciona um pequeno atraso para mostrar a mensagem de sucesso
           }
 
           if (data?.twoFactor) {
@@ -135,16 +141,14 @@ export const LoginForm = () => {
 
                       <FormMessage />
 
-                      <Button
-                        variant="link"
-                        className="font-normal w-full items-end justify-end px-0"
-                        size="sm"
-                        asChild
-                      >
-                        <Link href="/auth/reset" className="text-sm">
+                      <div className="font-normal text-end mt-2">
+                        <Link
+                          href="/auth/reset"
+                          className="text-sm text-primary underline-offset-4 hover:underline"
+                        >
                           Esqueceu sua senha?
                         </Link>
-                      </Button>
+                      </div>
                     </FormItem>
                   )}
                 />
