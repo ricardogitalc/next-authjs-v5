@@ -38,20 +38,32 @@ export const SettingsSchema = z
   );
 
 export const NewPasswordSchema = z.object({
-  password: z.string().min(6, {
-    message: "Mínimo de 6 caracteres obrigatórios",
-  }),
+  password: z
+    .string()
+    .min(8, { message: "A senha deve ter no mínimo 8 caracteres." })
+    .refine((value) => /[A-Z]/.test(value), {
+      message: "Pelo menos uma letra maiúscula.",
+    })
+    .refine((value) => /[a-z]/.test(value), {
+      message: "Pelo menos uma letra minúscula.",
+    })
+    .refine((value) => /[0-9]/.test(value), {
+      message: "Pelo menos um número.",
+    })
+    .refine((value) => /[\W_]/.test(value), {
+      message: "Pelo menos um caractere especial.",
+    }),
 });
 
 export const ResetSchema = z.object({
   email: z.string().email({
-    message: "O email é obrigatório.",
+    message: "Formato de email inválido.",
   }),
 });
 
 export const LoginSchema = z.object({
   email: z.string().email({
-    message: "O email é obrigatório.",
+    message: "Formato de email inválido.",
   }),
   password: z.string().min(1, {
     message: "A senha é obrigatória.",
@@ -60,13 +72,28 @@ export const LoginSchema = z.object({
 });
 
 export const RegisterSchema = z.object({
+  name: z
+    .string()
+    .min(1, { message: "O nome é obrigatório" })
+    .refine((value) => isNaN(Number(value)), {
+      message: "Somente letras são permitidas.",
+    }),
   email: z.string().email({
-    message: "O email é obrigatório.",
+    message: "Formato de email inválido.",
   }),
-  password: z.string().min(6, {
-    message: "Mínimo de 6 caracteres obrigatórios",
-  }),
-  name: z.string().min(1, {
-    message: "O nome é obrigatório",
-  }),
+  password: z
+    .string()
+    .min(8, { message: "A senha deve ter no mínimo 8 caracteres." })
+    .refine((value) => /[A-Z]/.test(value), {
+      message: "Pelo menos uma letra maiúscula.",
+    })
+    .refine((value) => /[a-z]/.test(value), {
+      message: "Pelo menos uma letra minúscula.",
+    })
+    .refine((value) => /[0-9]/.test(value), {
+      message: "Pelo menos um número.",
+    })
+    .refine((value) => /[\W_]/.test(value), {
+      message: "Pelo menos um caractere especial.",
+    }),
 });

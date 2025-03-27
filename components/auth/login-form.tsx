@@ -124,12 +124,21 @@ export const LoginForm = () => {
                     </FormItem>
                   )}
                 />
+
                 <FormField
                   control={form.control}
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Senha</FormLabel>
+                      <div className="flex justify-between items-center">
+                        <FormLabel>Senha</FormLabel>
+                        <Link
+                          href="/auth/reset"
+                          className="text-sm text-primary underline-offset-4 hover:underline"
+                        >
+                          Esqueceu sua senha?
+                        </Link>
+                      </div>
                       <FormControl>
                         <Input
                           {...field}
@@ -138,17 +147,7 @@ export const LoginForm = () => {
                           type="password"
                         />
                       </FormControl>
-
                       <FormMessage />
-
-                      <div className="font-normal text-end mt-2">
-                        <Link
-                          href="/auth/reset"
-                          className="text-sm text-primary underline-offset-4 hover:underline"
-                        >
-                          Esqueceu sua senha?
-                        </Link>
-                      </div>
                     </FormItem>
                   )}
                 />
